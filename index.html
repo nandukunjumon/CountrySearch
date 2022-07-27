@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Details</title>
+      <!-- JavaScript Bundle with Popper -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"></script>
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 border border-info rounded " style="text-align: center;">
+                <form action="" class="">
+                    <input type="text" placeholder="Enter country Name" id="cName" class="form-control mt-3">
+                    <button type="button" onclick="search()" class="btn btn-success mt-3 mb-3">Search</button>
+                </form>
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <!-- output -->
+        
+        <div class="row mt-5">
+          <div class="col-4"></div>
+          <div class="col-4" id="output"></div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+</body>
+<script>
+    function search(){
+        country=cName.value
+        console.log(country);
+        fetch(`https://restcountries.com/v2/name/${country}?fullText=true`)
+        .then(result=>result.json())
+        .then(data=>displayData(data))
+    }
+    function displayData(countryDetails){
+cName=countryDetails[0].cName
+capital=countryDetails[0].capital
+population=countryDetails[0].population
+currency=countryDetails[0].currencies[0].name 
+symbol=countryDetails[0].currencies[0].symbol
+language=countryDetails[0].languages[0].name
+flag=countryDetails[0].flag
+
+htmlData=`<div class="card" style="width: 18rem;">
+  <img src=${flag} class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Country : ${cName}</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Language : ${capital}</li>
+    <li class="list-group-item">Population : ${population}</li>
+    <li class="list-group-item">Currency : ${currency} , ${symbol}</li>
+    <li class="list-group-item">Language : ${language}</li>
+
+  </ul>
+  <div class="card-body">
+  </div>
+</div>`
+output.innerHTML=htmlData
+    }
+</script>
+</html>
